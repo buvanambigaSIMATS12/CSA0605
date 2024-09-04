@@ -1,0 +1,8 @@
+def separate_odd_even(nums):
+    evens = [num for num in nums if num % 2 == 0]
+    odds = [num for num in nums if num % 2 != 0]
+    return evens + odds
+nums = [3, 1, 2, 4, 7, 8, 10, 9]
+result = separate_odd_even(nums)
+print(result) 
+
