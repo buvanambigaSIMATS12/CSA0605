@@ -1,0 +1,23 @@
+def maxSumNonAdjacent(nums):
+    if not nums:
+        return 0
+    n = len(nums)
+    if n == 1:
+        return nums[0]
+    dp = [0] * n
+    dp[0] = nums[0]
+    dp[1] = max(nums[0], nums[1])
+    for i in range(2, n):
+        dp[i] = max(dp[i-1], nums[i] + dp[i-2])
+    return dp[-1]
+def sumOfMaxSumQueries(nums, queries):
+    MOD = 10**9 + 7
+    total_sum = 0
+    for posi, xi in queries:
+        nums[posi] = xi
+        max_sum = maxSumNonAdjacent(nums)
+        total_sum = (total_sum + max_sum) % MOD
+    return total_sum
+nums = [3, 2, 5, 10, 7]
+queries = [[1, 10], [2, 15]]
+print(sumOfMaxSumQueries(nums, queries))  
