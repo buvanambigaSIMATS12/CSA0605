@@ -1,0 +1,14 @@
+def getStringBeforeLastOperation(s):
+    while True:
+        new_s = []
+        seen = set() 
+        for char in s:
+            if char not in seen:
+                seen.add(char)  
+            else:
+                new_s.append(char) 
+        if len(new_s) == 0:
+            return s
+        s = ''.join(new_s)
+s = "aabcbbca"
+print(getStringBeforeLastOperation(s))  
