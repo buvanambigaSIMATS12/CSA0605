@@ -1,0 +1,30 @@
+def find_median(arr):
+    arr.sort()
+    return arr[len(arr) // 2]
+def partition(arr, low, high, pivot):
+    pivot_index = arr.index(pivot)
+    arr[pivot_index], arr[high] = arr[high], arr[pivot_index]
+    i = low
+    for j in range(low, high):
+        if arr[j] < pivot:
+            arr[i], arr[j] = arr[j], arr[i]
+            i += 1
+    arr[i], arr[high] = arr[high], arr[i]
+    return i
+def median_of_medians(arr, k):
+    if len(arr) <= 5:
+        arr.sort()
+        return arr[k]
+    medians = [find_median(arr[i:i+5]) for i in range(0, len(arr), 5)]
+    median_of_med = median_of_medians(medians, len(medians) // 2)
+    pivot_index = partition(arr, 0, len(arr) - 1, median_of_med)
+    if pivot_index == k:
+        return arr[pivot_index]
+    elif pivot_index > k:
+        return median_of_medians(arr[:pivot_index], k)
+    else:
+        return median_of_medians(arr[pivot_index+1:], k - pivot_index - 1)
+if __name__ == "__main__":
+    arr = [12, 3, 5, 7, 4, 19, 26]
+    k = 3 
+    print(f"The {k+1}-th smallest element is {median_of_medians(arr, k)}")
