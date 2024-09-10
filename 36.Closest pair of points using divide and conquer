@@ -1,0 +1,36 @@
+import math
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+def dist(p1, p2):
+    return math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2)
+def strip_closest(strip, d):
+    min_dist = d  
+    strip.sort(key=lambda point: point.y)
+    for i in range(len(strip)):
+        for j in range(i + 1, len(strip)):
+            if (strip[j].y - strip[i].y) < min_dist:
+                min_dist = dist(strip[i], strip[j])
+    return min_dist
+def closest_util(points, n):
+    if n <= 3:
+        min_dist = float('inf')
+        for i in range(n):
+            for j in range(i + 1, n):
+                min_dist = min(min_dist, dist(points[i], points[j]))
+        return min_dist
+    mid = n // 2
+    mid_point = points[mid]
+    dl = closest_util(points[:mid], mid)
+    dr = closest_util(points[mid:], n - mid)
+    d = min(dl, dr)
+    strip = [point for point in points if abs(point.x - mid_point.x) < d]
+    return min(d, strip_closest(strip, d))
+def closest(points):
+    points.sort(key=lambda point: point.x)  
+    return closest_util(points, len(points))
+if __name__ == "__main__":
+    points = [Point(2, 3), Point(12, 30), Point(40, 50), Point(5, 1), Point(12, 10), Point(3, 4)]
+    result = closest(points)
+    print(f"The smallest distance is {result:.6f}")
