@@ -1,0 +1,18 @@
+def max_difference(num: int) -> int:
+    num_str = str(num)
+    max_num = num
+    min_num = num
+    for x in range(10):
+        for y in range(10):
+            if x == y:
+                continue
+            new_num_str = num_str.replace(str(x), str(y))
+            if new_num_str[0] != '0' and new_num_str != '0':
+                max_num = max(max_num, int(new_num_str))
+            new_num_str = num_str.replace(str(y), str(x))
+            if new_num_str[0] != '0' and new_num_str != '0':
+                min_num = min(min_num, int(new_num_str))
+    return max_num - min_num
+num = 123456
+result = max_difference(num)
+print(result)
