@@ -1,0 +1,10 @@
+def can_break(s1, s2):
+    s1_sorted = sorted(s1)
+    s2_sorted = sorted(s2)
+    def check_break(x, y):
+        return all(x[i] >= y[i] for i in range(len(x)))
+    return check_break(s1_sorted, s2_sorted) or check_break(s2_sorted, s1_sorted)
+s1 = "abc"
+s2 = "xya"
+result = can_break(s1, s2)
+print(result) 
