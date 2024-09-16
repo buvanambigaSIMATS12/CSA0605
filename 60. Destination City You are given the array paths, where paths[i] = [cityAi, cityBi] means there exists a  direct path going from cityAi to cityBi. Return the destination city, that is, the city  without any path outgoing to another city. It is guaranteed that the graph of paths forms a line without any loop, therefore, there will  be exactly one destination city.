@@ -1,0 +1,10 @@
+def destCity(paths):
+    outgoing = set()
+    incoming = set()
+    for path in paths:
+        outgoing.add(path[0])
+        incoming.add(path[1])
+    destination = incoming - outgoing
+    return destination.pop() if destination else None
+paths = [["A", "B"], ["B", "C"], ["C", "D"]]
+print(destCity(paths))  
