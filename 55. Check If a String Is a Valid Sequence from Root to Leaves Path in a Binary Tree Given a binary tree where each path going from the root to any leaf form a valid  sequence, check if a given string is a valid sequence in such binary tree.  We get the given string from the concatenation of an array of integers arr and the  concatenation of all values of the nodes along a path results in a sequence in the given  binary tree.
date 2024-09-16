@@ -1,0 +1,17 @@
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+def isValidSequence(root: TreeNode, arr: list) -> bool:
+    def dfs(node, index):
+        if not node:
+            return index == len(arr)
+        if index < len(arr) and node.val == arr[index]:
+            if not node.left and not node.right:  # Leaf node
+                return index == len(arr) - 1
+            return dfs(node.left, index + 1) or dfs(node.right, index + 1)
+        return False
+
+    return dfs(root, 0)
