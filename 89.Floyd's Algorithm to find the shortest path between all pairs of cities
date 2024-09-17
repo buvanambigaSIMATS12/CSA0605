@@ -1,0 +1,38 @@
+def floyd_warshall(n, edges):
+    dist = [[float('inf')] * n for _ in range(n)]
+    for i in range(n):
+        dist[i][i] = 0
+    for u, v, w in edges:
+        dist[u][v] = w
+        dist[v][u] = w 
+    print("Distance matrix before applying Floyd's Algorithm:")
+    for row in dist:
+        print(row)
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][j] > dist[i][k] + dist[k][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    print("\nDistance matrix after applying Floyd's Algorithm:")
+    for row in dist:
+        print(row)
+    return dist
+def find_city(n, edges, distanceThreshold):
+    dist = floyd_warshall(n, edges)
+    count_neighbors = [0] * n
+    for i in range(n):
+        for j in range(n):
+            if dist[i][j] <= distanceThreshold:
+                count_neighbors[i] += 1
+    max_neighbors = -1
+    city = -1
+    for i in range(n):
+        if count_neighbors[i] > max_neighbors or (count_neighbors[i] == max_neighbors and i > city):
+            max_neighbors = count_neighbors[i]
+            city = i
+    return city
+n = 4
+edges = [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]]
+distanceThreshold = 4
+result = find_city(n, edges, distanceThreshold)
+print("\nOutput:", result)
