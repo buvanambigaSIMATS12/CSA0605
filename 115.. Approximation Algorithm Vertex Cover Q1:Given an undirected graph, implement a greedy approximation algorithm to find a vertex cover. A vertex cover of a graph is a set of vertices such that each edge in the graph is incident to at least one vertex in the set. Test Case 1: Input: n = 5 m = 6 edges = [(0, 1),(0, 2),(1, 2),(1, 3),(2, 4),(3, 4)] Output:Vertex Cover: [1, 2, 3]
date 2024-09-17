@@ -1,0 +1,14 @@
+def vertex_cover(n, edges):
+    cover = set()
+    edges = set(edges)
+    while edges:
+        u, v = edges.pop()
+        cover.add(u)
+        cover.add(v)
+        edges = {e for e in edges if u not in e and v not in e}
+    return list(cover)
+n = 5
+m = 6
+edges = [(0, 1), (0, 2), (1, 2), (1, 3), (2, 4), (3, 4)]
+result = vertex_cover(n, edges)
+print("Vertex Cover:", result)
